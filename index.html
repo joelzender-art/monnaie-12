@@ -89,65 +89,88 @@
     .zero {
       background: #f44336;
     }
-    .resultat {
-      margin-top: 15px;
-      font-size: 1.5em;
+    .resultat-page {
       text-align: center;
+      font-size: 1.8em;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .resultat-page p {
+      margin: 20px 0;
+    }
+    .resultat-page button {
+      font-size: 2em;
+      padding: 20px 40px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      background: #f44336;
     }
   </style>
 </head>
 <body>
   <h1>Rendu Monnaie</h1>
 
-  <div class="champ">
-    <label>Type de ticket :</label>
-    <div class="ticket-row">
-      <div class="ticket-buttons">
-        <button id="btn1h" onclick="selectTicket(1.3)">1,30 €</button>
-        <button id="btn1j" onclick="selectTicket(3)">3 €</button>
+  <!-- PAGE PRINCIPALE -->
+  <div id="pagePrincipale">
+    <div class="champ">
+      <label>Type de ticket :</label>
+      <div class="ticket-row">
+        <div class="ticket-buttons">
+          <button id="btn1h" onclick="selectTicket(1.3)">1,30 €</button>
+          <button id="btn1j" onclick="selectTicket(3)">3 €</button>
+        </div>
       </div>
+    </div>
+
+    <div class="champ">
+      <label>Nombre de tickets :</label>
+      <div class="quantite-row">
+        <div class="quantite-buttons">
+          <button onclick="selectQuantite(1)">1</button>
+          <button onclick="selectQuantite(2)">2</button>
+          <button onclick="selectQuantite(3)">3</button>
+          <button onclick="selectQuantite(4)">4</button>
+          <button onclick="selectQuantite(5)">5</button>
+        </div>
+        <div class="quantite-result" id="quantiteAffiche">x1</div>
+      </div>
+    </div>
+
+    <div class="champ">
+      <label>Somme donnée :</label>
+      <div class="somme-row">
+        <div class="pieces">
+          <button onclick="ajouterMontant(0.01)">0,01</button>
+          <button onclick="ajouterMontant(0.02)">0,02</button>
+          <button onclick="ajouterMontant(0.05)">0,05</button>
+          <button onclick="ajouterMontant(0.10)">0,10</button>
+          <button onclick="ajouterMontant(0.20)">0,20</button>
+          <button onclick="ajouterMontant(0.50)">0,50</button>
+          <button onclick="ajouterMontant(1)">1</button>
+          <button onclick="ajouterMontant(2)">2</button>
+          <button onclick="ajouterMontant(5)">5</button>
+          <button onclick="ajouterMontant(10)">10</button>
+        </div>
+        <div class="somme-result" id="sommeAffiche">0.00 €</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="cal" onclick="calculer()">Cal</button>
     </div>
   </div>
 
-  <div class="champ">
-    <label>Nombre de tickets :</label>
-    <div class="quantite-row">
-      <div class="quantite-buttons">
-        <button onclick="selectQuantite(1)">1</button>
-        <button onclick="selectQuantite(2)">2</button>
-        <button onclick="selectQuantite(3)">3</button>
-        <button onclick="selectQuantite(4)">4</button>
-        <button onclick="selectQuantite(5)">5</button>
-      </div>
-      <div class="quantite-result" id="quantiteAffiche">x1</div>
+  <!-- PAGE RESULTAT -->
+  <div id="pageResultat" style="display:none">
+    <div class="resultat-page">
+      <p id="resultatTotal"></p>
+      <p id="resultatRendu"></p>
+      <button onclick="resetForm()">Zero</button>
     </div>
   </div>
-
-  <div class="champ">
-    <label>Somme donnée :</label>
-    <div class="somme-row">
-      <div class="pieces">
-        <button onclick="ajouterMontant(0.01)">0,01</button>
-        <button onclick="ajouterMontant(0.02)">0,02</button>
-        <button onclick="ajouterMontant(0.05)">0,05</button>
-        <button onclick="ajouterMontant(0.10)">0,10</button>
-        <button onclick="ajouterMontant(0.20)">0,20</button>
-        <button onclick="ajouterMontant(0.50)">0,50</button>
-        <button onclick="ajouterMontant(1)">1</button>
-        <button onclick="ajouterMontant(2)">2</button>
-        <button onclick="ajouterMontant(5)">5</button>
-        <button onclick="ajouterMontant(10)">10</button>
-      </div>
-      <div class="somme-result" id="sommeAffiche">0.00 €</div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button class="cal" onclick="calculer()">Cal</button>
-    <button class="zero" onclick="resetForm()">Zero</button>
-  </div>
-
-  <div class="resultat" id="resultat"></div>
 
   <script>
     let ticketType = 1.3;
@@ -187,20 +210,26 @@
       const total = ticketType * currentQuantite;
       const rendu = somme - total;
 
-      let message = `Total à payer : ${total.toFixed(2)} €<br>`;
+      document.getElementById('resultatTotal').innerText = `Total à payer : ${total.toFixed(2)} €`;
       if (rendu >= 0) {
-        message += `Monnaie à rendre : ${rendu.toFixed(2)} €`;
+        document.getElementById('resultatRendu').innerText = `Monnaie à rendre : ${rendu.toFixed(2)} €`;
       } else {
-        message += `Somme insuffisante : manque ${Math.abs(rendu).toFixed(2)} €`;
+        document.getElementById('resultatRendu').innerText = `Somme insuffisante : manque ${Math.abs(rendu).toFixed(2)} €`;
       }
-      document.getElementById('resultat').innerHTML = message;
+
+      // Affiche la page résultat
+      document.getElementById('pagePrincipale').style.display = 'none';
+      document.getElementById('pageResultat').style.display = 'block';
     }
 
     function resetForm() {
       selectTicket(1.3);
       selectQuantite(1);
       document.getElementById('sommeAffiche').innerText = '0.00 €';
-      document.getElementById('resultat').innerHTML = '';
+
+      // Reviens à la page principale
+      document.getElementById('pageResultat').style.display = 'none';
+      document.getElementById('pagePrincipale').style.display = 'block';
     }
   </script>
 </body>
