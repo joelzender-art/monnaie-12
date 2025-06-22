@@ -7,43 +7,45 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 20px;
-      max-width: 480px;
+      padding: 10px;
+      max-width: 100%;
       margin: auto;
       background: #f0f0f0;
     }
     h1 {
       text-align: center;
       color: #333;
+      font-size: 1.5em;
     }
     .champ {
       background: #fff;
-      padding: 15px;
+      padding: 10px;
       border-radius: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     label {
       font-weight: bold;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
+      font-size: 1em;
     }
     .ticket-row, .quantite-row, .somme-row {
       display: flex;
-      align-items: stretch;
-      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
     }
     .ticket-buttons, .quantite-buttons, .pieces {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
-      flex: 1;
     }
     .ticket-buttons button, .quantite-buttons button, .pieces button {
       flex: 1 1 45%;
-      min-width: 80px;
-      padding: 15px;
-      font-size: 1.2em;
+      min-width: 60px;
+      padding: 10px;
+      font-size: 1em;
       border: none;
       border-radius: 8px;
       background: #4CAF50;
@@ -52,33 +54,32 @@
     .ticket-buttons button.selected {
       background: #2E7D32;
       font-weight: bold;
-      box-shadow: 0 0 10px #2E7D32;
+      box-shadow: 0 0 8px #2E7D32;
     }
     .quantite-result, .somme-result {
-      min-width: 80px;
+      min-width: 70px;
       background: #e0e0e0;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2em;
+      font-size: 1.5em;
       font-weight: bold;
-      padding: 10px;
+      padding: 5px;
     }
-    .pieces button {
-      padding: 10px;
-      font-size: 1em;
-      background: #2196F3;
+    .quantite-row, .somme-row {
+      flex-direction: row-reverse;
+      justify-content: space-between;
     }
     .actions {
       display: flex;
-      gap: 10px;
+      gap: 5px;
       margin-top: 10px;
     }
     .actions button {
       flex: 1;
-      font-size: 2em;
-      padding: 20px;
+      font-size: 1.5em;
+      padding: 10px;
       border: none;
       border-radius: 8px;
       color: white;
@@ -91,18 +92,18 @@
     }
     .resultat-page {
       text-align: center;
-      font-size: 1.8em;
+      font-size: 1.5em;
       background: #fff;
-      padding: 30px;
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .resultat-page p {
-      margin: 20px 0;
+      margin: 15px 0;
     }
     .resultat-page button {
-      font-size: 2em;
-      padding: 20px 40px;
+      font-size: 1.8em;
+      padding: 15px 30px;
       border: none;
       border-radius: 8px;
       color: white;
@@ -128,6 +129,7 @@
     <div class="champ">
       <label>Nombre de tickets :</label>
       <div class="quantite-row">
+        <div class="quantite-result" id="quantiteAffiche">x1</div>
         <div class="quantite-buttons">
           <button onclick="selectQuantite(1)">1</button>
           <button onclick="selectQuantite(2)">2</button>
@@ -135,13 +137,13 @@
           <button onclick="selectQuantite(4)">4</button>
           <button onclick="selectQuantite(5)">5</button>
         </div>
-        <div class="quantite-result" id="quantiteAffiche">x1</div>
       </div>
     </div>
 
     <div class="champ">
       <label>Somme donnée :</label>
       <div class="somme-row">
+        <div class="somme-result" id="sommeAffiche">0.00 €</div>
         <div class="pieces">
           <button onclick="ajouterMontant(0.01)">0,01</button>
           <button onclick="ajouterMontant(0.02)">0,02</button>
@@ -154,7 +156,6 @@
           <button onclick="ajouterMontant(5)">5</button>
           <button onclick="ajouterMontant(10)">10</button>
         </div>
-        <div class="somme-result" id="sommeAffiche">0.00 €</div>
       </div>
     </div>
 
@@ -217,7 +218,6 @@
         document.getElementById('resultatRendu').innerText = `Somme insuffisante : manque ${Math.abs(rendu).toFixed(2)} €`;
       }
 
-      // Affiche la page résultat
       document.getElementById('pagePrincipale').style.display = 'none';
       document.getElementById('pageResultat').style.display = 'block';
     }
@@ -227,7 +227,6 @@
       selectQuantite(1);
       document.getElementById('sommeAffiche').innerText = '0.00 €';
 
-      // Reviens à la page principale
       document.getElementById('pageResultat').style.display = 'none';
       document.getElementById('pagePrincipale').style.display = 'block';
     }
