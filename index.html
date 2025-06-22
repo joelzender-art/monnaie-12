@@ -8,7 +8,7 @@
     body {
       font-family: sans-serif;
       padding: 20px;
-      max-width: 400px;
+      max-width: 450px;
       margin: auto;
       background-color: #f9f9f9;
     }
@@ -37,15 +37,16 @@
       border: 1px solid #ccc;
       margin-top: 5px;
     }
-    .ticket-buttons, .quantite-buttons {
+    .ticket-buttons, .quantite-row {
       display: flex;
-      justify-content: space-around;
+      align-items: center;
       gap: 10px;
       margin-bottom: 10px;
+      flex-wrap: wrap;
     }
     .ticket-buttons button, .quantite-buttons button {
       flex: 1;
-      padding: 15px;
+      padding: 12px;
       font-size: 1.1em;
       border: none;
       border-radius: 8px;
@@ -56,12 +57,16 @@
     .quantite-buttons button.selected {
       background-color: #388E3C;
     }
+    .pieces-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
     .pieces {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
-      justify-content: center;
-      margin-top: 10px;
     }
     .pieces button {
       width: 70px;
@@ -95,6 +100,11 @@
       font-size: 1.3em;
       text-align: center;
     }
+    .inline-result {
+      font-size: 1.1em;
+      font-weight: bold;
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
@@ -110,32 +120,35 @@
 
   <div class="champ">
     <label>Nombre de tickets :</label>
-    <div class="quantite-buttons">
-      <button onclick="selectQuantite(1)">1</button>
-      <button onclick="selectQuantite(2)">2</button>
-      <button onclick="selectQuantite(3)">3</button>
-      <button onclick="selectQuantite(4)">4</button>
-      <button onclick="selectQuantite(5)">5</button>
+    <div class="quantite-row">
+      <div class="quantite-buttons" style="flex: 1; display: flex; gap: 5px;">
+        <button onclick="selectQuantite(1)">1</button>
+        <button onclick="selectQuantite(2)">2</button>
+        <button onclick="selectQuantite(3)">3</button>
+        <button onclick="selectQuantite(4)">4</button>
+        <button onclick="selectQuantite(5)">5</button>
+      </div>
+      <div class="inline-result" id="quantiteAffiche">x1</div>
     </div>
-    <input type="number" id="quantite" min="1" value="1">
   </div>
 
   <div class="champ">
-    <label for="somme">Somme donnée (€) :</label>
-    <input type="number" id="somme" min="0" step="0.01" placeholder="0.00">
-  </div>
-
-  <div class="pieces">
-    <button onclick="ajouterMontant(0.01)">0,01 €</button>
-    <button onclick="ajouterMontant(0.02)">0,02 €</button>
-    <button onclick="ajouterMontant(0.05)">0,05 €</button>
-    <button onclick="ajouterMontant(0.10)">0,10 €</button>
-    <button onclick="ajouterMontant(0.20)">0,20 €</button>
-    <button onclick="ajouterMontant(0.50)">0,50 €</button>
-    <button onclick="ajouterMontant(1)">1 €</button>
-    <button onclick="ajouterMontant(2)">2 €</button>
-    <button onclick="ajouterMontant(5)">5 €</button>
-    <button onclick="ajouterMontant(10)">10 €</button>
+    <label>Somme donnée :</label>
+    <div class="pieces-row">
+      <div class="pieces" style="flex: 1;">
+        <button onclick="ajouterMontant(0.01)">0,01</button>
+        <button onclick="ajouterMontant(0.02)">0,02</button>
+        <button onclick="ajouterMontant(0.05)">0,05</button>
+        <button onclick="ajouterMontant(0.10)">0,10</button>
+        <button onclick="ajouterMontant(0.20)">0,20</button>
+        <button onclick="ajouterMontant(0.50)">0,50</button>
+        <button onclick="ajouterMontant(1)">1</button>
+        <button onclick="ajouterMontant(2)">2</button>
+        <button onclick="ajouterMontant(5)">5</button>
+        <button onclick="ajouterMontant(10)">10</button>
+      </div>
+      <div class="inline-result" id="sommeAffiche">0.00 €</div>
+    </div>
   </div>
 
   <div class="actions">
@@ -148,6 +161,7 @@
   <script>
     let ticketType = 1.3;
     document.getElementById('btn1h').classList.add('selected');
+    let currentQuantite = 1;
 
     function selectTicket(value) {
       ticketType = value;
@@ -161,41 +175,43 @@
     }
 
     function selectQuantite(q) {
-      document.getElementById('quantite').value = q;
+      currentQuantite = q;
+      document.getElementById('quantiteAffiche').innerText = 'x' + q;
       document.querySelectorAll('.quantite-buttons button').forEach(btn => btn.classList.remove('selected'));
       const buttons = document.querySelectorAll('.quantite-buttons button');
       buttons[q - 1].classList.add('selected');
     }
 
-    function calculer() {
-      const quantite = parseInt(document.getElementById('quantite').value);
-      const somme = parseFloat(document.getElementById('somme').value) || 0;
+    function ajouterMontant(valeur) {
+      const sommeAffiche = document.getElementById('sommeAffiche');
+      let actuel = parseFloat(sommeAffiche.innerText) || 0;
+      let nouveau = (actuel + valeur).toFixed(2);
+      sommeAffiche.innerText = nouveau + ' €';
+    }
 
-      const total = ticketType * quantite;
+    function getSommeActuelle() {
+      return parseFloat(document.getElementById('sommeAffiche').innerText) || 0;
+    }
+
+    function calculer() {
+      const somme = getSommeActuelle();
+      const total = ticketType * currentQuantite;
       const rendu = somme - total;
 
       let message = `Total à payer : ${total.toFixed(2)} €<br>`;
-
       if (rendu >= 0) {
         message += `Monnaie à rendre : ${rendu.toFixed(2)} €`;
       } else {
         message += `Somme insuffisante : manque ${Math.abs(rendu).toFixed(2)} €`;
       }
-
       document.getElementById('resultat').innerHTML = message;
-    }
-
-    function ajouterMontant(valeur) {
-      const input = document.getElementById('somme');
-      let actuel = parseFloat(input.value) || 0;
-      input.value = (actuel + valeur).toFixed(2);
     }
 
     function resetForm() {
       selectTicket(1.3);
       selectQuantite(1);
-      document.getElementById('somme').value = "";
-      document.getElementById('resultat').innerHTML = "";
+      document.getElementById('sommeAffiche').innerText = '0.00 €';
+      document.getElementById('resultat').innerHTML = '';
     }
   </script>
 </body>
