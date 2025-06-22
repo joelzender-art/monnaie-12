@@ -133,6 +133,7 @@
     <div class="champ">
       <label>Nombre de tickets</label>
       <div class="row">
+        <div class="result-box" id="quantiteAffiche">x1</div>
         <div class="buttons">
           <button onclick="selectQuantite(1)">1</button>
           <button onclick="selectQuantite(2)">2</button>
@@ -141,13 +142,13 @@
           <button onclick="selectQuantite(5)">5</button>
           <button class="zero-btn" onclick="resetQuantite()">Zero</button>
         </div>
-        <div class="result-box" id="quantiteAffiche">x1</div>
       </div>
     </div>
 
     <div class="champ">
       <label>Somme donnée</label>
       <div class="row">
+        <div class="result-box" id="sommeAffiche">0.00 €</div>
         <div class="buttons">
           <button onclick="ajouterMontant(0.01)">0.01</button>
           <button onclick="ajouterMontant(0.02)">0.02</button>
@@ -161,7 +162,6 @@
           <button onclick="ajouterMontant(10)">10</button>
           <button class="zero-btn" onclick="resetSomme()">Zero</button>
         </div>
-        <div class="result-box" id="sommeAffiche">0.00 €</div>
       </div>
     </div>
 
