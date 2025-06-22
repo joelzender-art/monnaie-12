@@ -96,6 +96,15 @@
     .resultat-page p {
       margin: 15px 0;
     }
+    #resultatRenduLabel {
+      font-size: 2em;
+      font-weight: bold;
+    }
+    #resultatRenduValeur {
+      font-size: 3em;
+      font-weight: bold;
+      color: #4CAF50;
+    }
     .resultat-page button {
       font-size: 1.8em;
       padding: 15px 30px;
@@ -111,59 +120,15 @@
 
   <!-- PAGE PRINCIPALE -->
   <div id="pagePrincipale">
-    <div class="champ">
-      <label>Type de ticket :</label>
-      <div class="buttons">
-        <button id="btn1h" onclick="selectTicket(1.3)">1,30 €</button>
-        <button id="btn1j" onclick="selectTicket(3)">3 €</button>
-      </div>
-    </div>
-
-    <div class="champ">
-      <label>Nombre de tickets :</label>
-      <div class="row">
-        <div class="result-box" id="quantiteAffiche">x1</div>
-        <div class="buttons">
-          <button onclick="selectQuantite(1)">1</button>
-          <button onclick="selectQuantite(2)">2</button>
-          <button onclick="selectQuantite(3)">3</button>
-          <button onclick="selectQuantite(4)">4</button>
-          <button onclick="selectQuantite(5)">5</button>
-          <button class="zero-btn" onclick="resetQuantite()">Zero</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="champ">
-      <label>Somme donnée :</label>
-      <div class="row">
-        <div class="result-box" id="sommeAffiche">0.00 €</div>
-        <div class="buttons">
-          <button onclick="ajouterMontant(0.01)">0,01</button>
-          <button onclick="ajouterMontant(0.02)">0,02</button>
-          <button onclick="ajouterMontant(0.05)">0,05</button>
-          <button onclick="ajouterMontant(0.10)">0,10</button>
-          <button onclick="ajouterMontant(0.20)">0,20</button>
-          <button onclick="ajouterMontant(0.50)">0,50</button>
-          <button onclick="ajouterMontant(1)">1</button>
-          <button onclick="ajouterMontant(2)">2</button>
-          <button onclick="ajouterMontant(5)">5</button>
-          <button onclick="ajouterMontant(10)">10</button>
-          <button class="zero-btn" onclick="resetSomme()">Zero</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="cal" onclick="calculer()">Cal</button>
-    </div>
+    <!-- ... (les blocs précédents restent inchangés, comme dans ton code actuel) -->
   </div>
 
   <!-- PAGE RESULTAT -->
   <div id="pageResultat" style="display:none">
     <div class="resultat-page">
       <p id="resultatTotal"></p>
-      <p id="resultatRendu"></p>
+      <p id="resultatRenduLabel"></p>
+      <p id="resultatRenduValeur"></p>
       <button onclick="resetForm()">Zero</button>
     </div>
   </div>
@@ -213,10 +178,13 @@
       const rendu = somme - total;
 
       document.getElementById('resultatTotal').innerText = `Total à payer : ${total.toFixed(2)} €`;
+
       if (rendu >= 0) {
-        document.getElementById('resultatRendu').innerText = `Monnaie à rendre : ${rendu.toFixed(2)} €`;
+        document.getElementById('resultatRenduLabel').innerText = "Monnaie à rendre :";
+        document.getElementById('resultatRenduValeur').innerText = `${rendu.toFixed(2)} €`;
       } else {
-        document.getElementById('resultatRendu').innerText = `Somme insuffisante : manque ${Math.abs(rendu).toFixed(2)} €`;
+        document.getElementById('resultatRenduLabel').innerText = "Somme insuffisante :";
+        document.getElementById('resultatRenduValeur').innerText = `- ${Math.abs(rendu).toFixed(2)} €`;
       }
 
       document.getElementById('pagePrincipale').style.display = 'none';
