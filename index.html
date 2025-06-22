@@ -120,7 +120,54 @@
 
   <!-- PAGE PRINCIPALE -->
   <div id="pagePrincipale">
-    <!-- ... (les blocs précédents restent inchangés, comme dans ton code actuel) -->
+    <div class="champ">
+      <label>Choix ticket</label>
+      <div class="row">
+        <div class="buttons">
+          <button id="btn1h" onclick="selectTicket(1.3)">1.30€</button>
+          <button id="btn1j" onclick="selectTicket(3)">3€</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="champ">
+      <label>Nombre de tickets</label>
+      <div class="row">
+        <div class="buttons">
+          <button onclick="selectQuantite(1)">1</button>
+          <button onclick="selectQuantite(2)">2</button>
+          <button onclick="selectQuantite(3)">3</button>
+          <button onclick="selectQuantite(4)">4</button>
+          <button onclick="selectQuantite(5)">5</button>
+          <button class="zero-btn" onclick="resetQuantite()">Zero</button>
+        </div>
+        <div class="result-box" id="quantiteAffiche">x1</div>
+      </div>
+    </div>
+
+    <div class="champ">
+      <label>Somme donnée</label>
+      <div class="row">
+        <div class="buttons">
+          <button onclick="ajouterMontant(0.01)">0.01</button>
+          <button onclick="ajouterMontant(0.02)">0.02</button>
+          <button onclick="ajouterMontant(0.05)">0.05</button>
+          <button onclick="ajouterMontant(0.1)">0.10</button>
+          <button onclick="ajouterMontant(0.2)">0.20</button>
+          <button onclick="ajouterMontant(0.5)">0.50</button>
+          <button onclick="ajouterMontant(1)">1</button>
+          <button onclick="ajouterMontant(2)">2</button>
+          <button onclick="ajouterMontant(5)">5</button>
+          <button onclick="ajouterMontant(10)">10</button>
+          <button class="zero-btn" onclick="resetSomme()">Zero</button>
+        </div>
+        <div class="result-box" id="sommeAffiche">0.00 €</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="cal" onclick="calculer()">Cal</button>
+    </div>
   </div>
 
   <!-- PAGE RESULTAT -->
