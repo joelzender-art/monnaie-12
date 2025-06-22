@@ -8,7 +8,7 @@
     body {
       font-family: sans-serif;
       padding: 20px;
-      max-width: 450px;
+      max-width: 480px;
       margin: auto;
       background-color: #f9f9f9;
     }
@@ -29,25 +29,17 @@
       margin-bottom: 5px;
       display: block;
     }
-    input {
-      width: 100%;
-      font-size: 1.1em;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-top: 5px;
-    }
-    .ticket-buttons, .quantite-row {
+    .ticket-buttons, .quantite-buttons {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
       flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
     }
     .ticket-buttons button, .quantite-buttons button {
-      flex: 1;
-      padding: 12px;
-      font-size: 1.1em;
+      flex: 1 1 40%;
+      min-width: 80px;
+      padding: 15px;
+      font-size: 1.2em;
       border: none;
       border-radius: 8px;
       color: white;
@@ -56,6 +48,16 @@
     .ticket-buttons button.selected,
     .quantite-buttons button.selected {
       background-color: #388E3C;
+    }
+    .quantite-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .inline-result {
+      font-size: 1.8em;
+      font-weight: bold;
     }
     .pieces-row {
       display: flex;
@@ -67,14 +69,22 @@
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
+      flex: 1;
     }
     .pieces button {
       width: 70px;
-      padding: 8px;
+      padding: 10px;
       background-color: #2196F3;
       color: white;
       border: none;
       border-radius: 6px;
+      font-size: 1em;
+    }
+    #sommeAffiche {
+      font-size: 1.8em;
+      font-weight: bold;
+      min-width: 80px;
+      text-align: right;
     }
     .actions {
       display: flex;
@@ -84,7 +94,7 @@
     .actions button {
       flex: 1;
       padding: 20px;
-      font-size: 1.8em;
+      font-size: 2em;
       border: none;
       border-radius: 10px;
       color: white;
@@ -97,13 +107,8 @@
     }
     .resultat {
       margin-top: 20px;
-      font-size: 1.3em;
+      font-size: 1.5em;
       text-align: center;
-    }
-    .inline-result {
-      font-size: 1.1em;
-      font-weight: bold;
-      white-space: nowrap;
     }
   </style>
 </head>
@@ -120,14 +125,14 @@
 
   <div class="champ">
     <label>Nombre de tickets :</label>
+    <div class="quantite-buttons">
+      <button onclick="selectQuantite(1)">1</button>
+      <button onclick="selectQuantite(2)">2</button>
+      <button onclick="selectQuantite(3)">3</button>
+      <button onclick="selectQuantite(4)">4</button>
+      <button onclick="selectQuantite(5)">5</button>
+    </div>
     <div class="quantite-row">
-      <div class="quantite-buttons" style="flex: 1; display: flex; gap: 5px;">
-        <button onclick="selectQuantite(1)">1</button>
-        <button onclick="selectQuantite(2)">2</button>
-        <button onclick="selectQuantite(3)">3</button>
-        <button onclick="selectQuantite(4)">4</button>
-        <button onclick="selectQuantite(5)">5</button>
-      </div>
       <div class="inline-result" id="quantiteAffiche">x1</div>
     </div>
   </div>
@@ -135,7 +140,7 @@
   <div class="champ">
     <label>Somme donnée :</label>
     <div class="pieces-row">
-      <div class="pieces" style="flex: 1;">
+      <div class="pieces">
         <button onclick="ajouterMontant(0.01)">0,01</button>
         <button onclick="ajouterMontant(0.02)">0,02</button>
         <button onclick="ajouterMontant(0.05)">0,05</button>
@@ -147,7 +152,7 @@
         <button onclick="ajouterMontant(5)">5</button>
         <button onclick="ajouterMontant(10)">10</button>
       </div>
-      <div class="inline-result" id="sommeAffiche">0.00 €</div>
+      <div id="sommeAffiche">0.00 €</div>
     </div>
   </div>
 
