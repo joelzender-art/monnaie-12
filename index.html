@@ -56,27 +56,6 @@
     .quantite-buttons button.selected {
       background-color: #388E3C;
     }
-    button.action {
-      width: 48%;
-      padding: 20px;
-      font-size: 1.5em;
-      border: none;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-    .cal {
-      background-color: #4CAF50;
-      color: white;
-    }
-    .zero {
-      background-color: #f44336;
-      color: white;
-    }
-    .resultat {
-      margin-top: 20px;
-      font-size: 1.3em;
-      text-align: center;
-    }
     .pieces {
       display: flex;
       flex-wrap: wrap;
@@ -91,6 +70,30 @@
       color: white;
       border: none;
       border-radius: 6px;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .actions button {
+      flex: 1;
+      padding: 20px;
+      font-size: 1.8em;
+      border: none;
+      border-radius: 10px;
+      color: white;
+    }
+    .cal {
+      background-color: #4CAF50;
+    }
+    .zero {
+      background-color: #f44336;
+    }
+    .resultat {
+      margin-top: 20px;
+      font-size: 1.3em;
+      text-align: center;
     }
   </style>
 </head>
@@ -135,9 +138,9 @@
     <button onclick="ajouterMontant(10)">10 €</button>
   </div>
 
-  <div style="display: flex; justify-content: space-between;">
-    <button class="action cal" onclick="calculer()">Cal</button>
-    <button class="action zero" onclick="resetForm()">Zero</button>
+  <div class="actions">
+    <button class="cal" onclick="calculer()">Cal</button>
+    <button class="zero" onclick="resetForm()">Zero</button>
   </div>
 
   <div class="resultat" id="resultat"></div>
