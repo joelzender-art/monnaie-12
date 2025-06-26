@@ -143,160 +143,169 @@
   </style>
 </head>
 <body>
-  <h1>Rendu Monnaie</h1>
-
-  <div id="pagePrincipale">
-    <div class="champ">
-      <div class="row">
-        <strong>Choix Ticket :</strong>
-        <div class="buttons">
-          <button onclick="choisirTarif(1.3, this)">1,30€</button>
-          <button onclick="choisirTarif(3, this)">3€</button>
-          <button id="customBtn" onclick="afficherClavier()">Perso</button>
-        </div>
-        <div id="customPricePopup">
-          <div id="customPriceDisplay">0</div>
-          <div class="numpad">
-            <button onclick="ajouterChiffre('1')">1</button>
-            <button onclick="ajouterChiffre('2')">2</button>
-            <button onclick="ajouterChiffre('3')">3</button>
-            <button onclick="ajouterChiffre('4')">4</button>
-            <button onclick="ajouterChiffre('5')">5</button>
-            <button onclick="ajouterChiffre('6')">6</button>
-            <button onclick="ajouterChiffre('7')">7</button>
-            <button onclick="ajouterChiffre('8')">8</button>
-            <button onclick="ajouterChiffre('9')">9</button>
-            <button onclick="ajouterChiffre('.')">.</button>
-            <button onclick="ajouterChiffre('0')">0</button>
-            <button class="zero-btn" onclick="resetClavier()">Effacer</button>
-          </div>
-          <button onclick="validerPrixPerso()">Valider</button>
-        </div>
+<h1>Rendu Monnaie</h1>
+<div id="pagePrincipale">
+  <div class="champ">
+    <label>Choix ticket</label>
+    <div class="row">
+      <div class="buttons">
+        <button id="btn1h" onclick="selectTicket(1.3)">1.30€</button>
+        <button id="btn1j" onclick="selectTicket(3)">3€</button>
+        <button id="btnPerso" onclick="ouvrirClavier()">Perso</button>
       </div>
-    </div>
-
-    <div class="champ">
-      <div class="row">
-        <strong>Nombre :</strong>
-        <div class="buttons">
-          <button onclick="changerQuantite(1)">1</button>
-          <button onclick="changerQuantite(2)">2</button>
-          <button onclick="changerQuantite(3)">3</button>
-          <button onclick="changerQuantite(4)">4</button>
-          <button onclick="changerQuantite(5)">5</button>
-          <button class="zero-btn" onclick="changerQuantite(0)">0</button>
-        </div>
-        <div class="result-box" id="quantiteAffichee">0</div>
-      </div>
-    </div>
-
-    <div class="champ">
-      <div class="row">
-        <strong>Donné :</strong>
-        <div class="buttons">
-          <button onclick="ajouterDonne(0.01)">0,01</button>
-          <button onclick="ajouterDonne(0.02)">0,02</button>
-          <button onclick="ajouterDonne(0.05)">0,05</button>
-          <button onclick="ajouterDonne(0.1)">0,10</button>
-          <button onclick="ajouterDonne(0.2)">0,20</button>
-          <button onclick="ajouterDonne(0.5)">0,50</button>
-          <button onclick="ajouterDonne(1)">1€</button>
-          <button onclick="ajouterDonne(2)">2€</button>
-          <button onclick="ajouterDonne(5)">5€</button>
-          <button onclick="ajouterDonne(10)">10€</button>
-          <button class="zero-btn" onclick="resetDonne()">0</button>
-        </div>
-        <div class="result-box" id="sommeDonnee">0</div>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="cal" onclick="calculer()">Cal</button>
     </div>
   </div>
-
-  <div id="pageResultat" style="display:none">
-    <div class="resultat-page">
-      <p id="resultatTotal">Total à payer : </p>
-      <p id="resultatRenduLabel">Monnaie à rendre :</p>
-      <p id="resultatRenduValeur">0.00 €</p>
-      <button class="zero-btn" onclick="resetForm()">Zero</button>
+  <div class="champ">
+    <label>Nombre de tickets</label>
+    <div class="row">
+      <div class="result-box" id="quantiteAffiche">x1</div>
+      <div class="buttons">
+        <button onclick="selectQuantite(1)">1</button>
+        <button onclick="selectQuantite(2)">2</button>
+        <button onclick="selectQuantite(3)">3</button>
+        <button onclick="selectQuantite(4)">4</button>
+        <button onclick="selectQuantite(5)">5</button>
+        <button class="zero-btn" onclick="resetQuantite()">Zero</button>
+      </div>
     </div>
   </div>
+  <div class="champ">
+    <label>Somme donnée</label>
+    <div class="row">
+      <div class="result-box" id="sommeAffiche">0.00 €</div>
+      <div class="buttons">
+        <button onclick="ajouterMontant(0.01)">0.01</button>
+        <button onclick="ajouterMontant(0.02)">0.02</button>
+        <button onclick="ajouterMontant(0.05)">0.05</button>
+        <button onclick="ajouterMontant(0.1)">0.10</button>
+        <button onclick="ajouterMontant(0.2)">0.20</button>
+        <button onclick="ajouterMontant(0.5)">0.50</button>
+        <button onclick="ajouterMontant(1)">1</button>
+        <button onclick="ajouterMontant(2)">2</button>
+        <button onclick="ajouterMontant(5)">5</button>
+        <button onclick="ajouterMontant(10)">10</button>
+        <button class="zero-btn" onclick="resetSomme()">Zero</button>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="cal" onclick="calculer()">Cal</button>
+  </div>
+</div>
+<div id="pageResultat" style="display:none">
+  <div class="resultat-page">
+    <p id="resultatTotal"></p>
+    <p id="resultatRenduLabel"></p>
+    <p id="resultatRenduValeur"></p>
+    <button class="zero-btn" onclick="resetForm()">Zero</button>
+  </div>
+</div>
+<!-- popup clavier perso -->
+<div id="customPricePopup">
+  <div id="customPriceDisplay">0</div>
+  <div class="numpad">
+    <button onclick="addDigit('1')">1</button>
+    <button onclick="addDigit('2')">2</button>
+    <button onclick="addDigit('3')">3</button>
+    <button onclick="addDigit('4')">4</button>
+    <button onclick="addDigit('5')">5</button>
+    <button onclick="addDigit('6')">6</button>
+    <button onclick="addDigit('7')">7</button>
+    <button onclick="addDigit('8')">8</button>
+    <button onclick="addDigit('9')">9</button>
+    <button onclick="addDigit('.')">.</button>
+    <button onclick="addDigit('0')">0</button>
+    <button class="zero-btn" onclick="clearCustom()">Zero</button>
+  </div>
+  <br/>
+  <button onclick="validerCustom()" style="width:100%;padding:10px;font-size:1.5em;background:#2E7D32;color:white;border:none;border-radius:8px;margin-top:10px">Valider</button>
+</div>
+<script>
+  let ticketType = 1.3;
+  let currentQuantite = 1;
 
-  <script>
-    let tarif = 0;
-    let quantite = 0;
-    let donne = 0;
-    let prixPerso = 0;
+  function selectTicket(value) {
+    ticketType = value;
+    document.querySelectorAll('.buttons button').forEach(b => b.classList.remove('selected'));
+    if (value === 1.3) document.getElementById('btn1h').classList.add('selected');
+    else if (value === 3) document.getElementById('btn1j').classList.add('selected');
+    else document.getElementById('btnPerso').classList.add('selected');
+  }
 
-    function choisirTarif(valeur, bouton) {
-      tarif = valeur;
-      document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('selected'));
-      bouton.classList.add('selected');
-    }
+  function ouvrirClavier() {
+    document.getElementById('customPricePopup').style.display = 'block';
+    clearCustom();
+  }
 
-    function changerQuantite(val) {
-      quantite = val;
-      document.getElementById('quantiteAffichee').innerText = quantite;
-    }
+  function addDigit(d) {
+    let disp = document.getElementById('customPriceDisplay');
+    if (disp.innerText === '0') disp.innerText = d;
+    else disp.innerText += d;
+  }
 
-    function ajouterDonne(val) {
-      donne += val;
-      document.getElementById('sommeDonnee').innerText = donne.toFixed(2);
-    }
+  function clearCustom() {
+    document.getElementById('customPriceDisplay').innerText = '0';
+  }
 
-    function calculer() {
-      let total = tarif * quantite;
-      let rendu = donne - total;
-      document.getElementById('resultatTotal').innerText = `Total à payer : ${total.toFixed(2)} €`;
-      document.getElementById('resultatRenduValeur').innerText = rendu.toFixed(2) + ' €';
-      document.getElementById('pagePrincipale').style.display = 'none';
-      document.getElementById('pageResultat').style.display = 'block';
-    }
-
-    function resetForm() {
-      tarif = 0; quantite = 0; donne = 0; prixPerso = 0;
-      document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('selected'));
-      document.getElementById('quantiteAffichee').innerText = '0';
-      document.getElementById('sommeDonnee').innerText = '0';
-      document.getElementById('customBtn').innerText = 'Perso';
-      document.getElementById('pagePrincipale').style.display = 'block';
-      document.getElementById('pageResultat').style.display = 'none';
-    }
-
-    function resetDonne() {
-      donne = 0;
-      document.getElementById('sommeDonnee').innerText = '0';
-    }
-
-    function afficherClavier() {
-      document.getElementById('customPricePopup').style.display = 'block';
-      prixPerso = '';
-      updateAffichageClavier();
-    }
-
-    function ajouterChiffre(chiffre) {
-      prixPerso += chiffre;
-      updateAffichageClavier();
-    }
-
-    function updateAffichageClavier() {
-      document.getElementById('customPriceDisplay').innerText = prixPerso || '0';
-    }
-
-    function resetClavier() {
-      prixPerso = '';
-      updateAffichageClavier();
-    }
-
-    function validerPrixPerso() {
-      tarif = parseFloat(prixPerso) || 0;
-      document.getElementById('customBtn').innerText = `Perso (${tarif.toFixed(2)} €)`;
-      document.querySelectorAll('.buttons button').forEach(btn => btn.classList.remove('selected'));
-      document.getElementById('customBtn').classList.add('selected');
+  function validerCustom() {
+    let val = parseFloat(document.getElementById('customPriceDisplay').innerText);
+    if (!isNaN(val) && val > 0) {
+      selectTicket(val);
+      document.getElementById('btnPerso').innerText = `Perso (${val.toFixed(2)} €)`;
       document.getElementById('customPricePopup').style.display = 'none';
+    } else {
+      alert("Montant invalide.");
     }
-  </script>
+  }
+
+  function selectQuantite(q) {
+    currentQuantite = q;
+    document.getElementById('quantiteAffiche').innerText = 'x' + q;
+  }
+
+  function resetQuantite() {
+    selectQuantite(1);
+  }
+
+  function ajouterMontant(valeur) {
+    const sommeAffiche = document.getElementById('sommeAffiche');
+    let actuel = parseFloat(sommeAffiche.innerText) || 0;
+    let nouveau = (actuel + valeur).toFixed(2);
+    sommeAffiche.innerText = nouveau + ' €';
+  }
+
+  function resetSomme() {
+    document.getElementById('sommeAffiche').innerText = '0.00 €';
+  }
+
+  function getSommeActuelle() {
+    return parseFloat(document.getElementById('sommeAffiche').innerText) || 0;
+  }
+
+  function calculer() {
+    const somme = getSommeActuelle();
+    const total = ticketType * currentQuantite;
+    const rendu = somme - total;
+    document.getElementById('resultatTotal').innerText = `Total à payer : ${total.toFixed(2)} €`;
+    if (rendu >= 0) {
+      document.getElementById('resultatRenduLabel').innerText = "Monnaie à rendre :";
+      document.getElementById('resultatRenduValeur').innerText = `${rendu.toFixed(2)} €`;
+    } else {
+      document.getElementById('resultatRenduLabel').innerText = "Somme insuffisante :";
+      document.getElementById('resultatRenduValeur').innerText = `- ${Math.abs(rendu).toFixed(2)} €`;
+    }
+    document.getElementById('pagePrincipale').style.display = 'none';
+    document.getElementById('pageResultat').style.display = 'block';
+  }
+
+  function resetForm() {
+    selectTicket(1.3);
+    document.getElementById('btnPerso').innerText = 'Perso';
+    resetQuantite();
+    resetSomme();
+    document.getElementById('pageResultat').style.display = 'none';
+    document.getElementById('pagePrincipale').style.display = 'block';
+  }
+</script>
 </body>
 </html>
